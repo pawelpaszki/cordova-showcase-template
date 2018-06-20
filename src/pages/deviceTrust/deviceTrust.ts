@@ -103,7 +103,15 @@ export class DeviceTrustPage {
   // end::detectDeviceLock[]
 
   refreshChecks(): void {
-    this.ionViewWillEnter();
+    this.detections = [];
+    this.trustScore = 0;
+    this.totalTests = 0;
+    this.totalDetections = 0;
+    this.totalPassed= 0;
+    this.performChecks().then(() => { 
+      this.checkDialog(this.trustScore);
+    });
+    this.performChecksAndPublishMetrics();
   }
 
   checkDialog(trustScore: number): void {
@@ -114,13 +122,7 @@ export class DeviceTrustPage {
   }
 
   ionViewWillEnter(): void {
-    this.detections = [];
-    this.trustScore = 0;
-    this.totalTests = 0;
-    this.totalDetections = 0;
-    this.totalPassed= 0;
-    this.performChecks().then(() => { this.checkDialog(this.trustScore) });
-    this.performChecksAndPublishMetrics();
+    this.refreshChecks();
   }
 
 }
