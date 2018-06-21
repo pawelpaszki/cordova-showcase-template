@@ -34,11 +34,11 @@ export class AuthPage {
             this.navCtrl.setRoot(AuthDetailsPage);
         } else {
             const configKeys: string[] = Object.keys(this.auth.getConfig()).toString().split(',');
-            console.log(configKeys.length);
+            const previousPage: any = this.navParams.get('previousPage');
             if (configKeys.length <= 1 || configKeys.indexOf('url') === -1) {
                 this.configValid = false;
                 this.alert.showAlert(constants.idmMessage, constants.featureNotConfigured, 
-                  constants.alertButtons, constants.showDocs, constants.idmUrl);
+                  constants.alertButtons, constants.showDocs, constants.idmUrl, previousPage);
             } else {
                 this.configValid = true;
             }

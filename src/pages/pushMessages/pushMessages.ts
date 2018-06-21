@@ -1,3 +1,4 @@
+import { NavParams } from 'ionic-angular';
 import { Component } from '@angular/core';
 import { PushMessage } from "./message";
 import { PushService } from "../../services/push.service";
@@ -11,7 +12,7 @@ import { AlertService } from '../../services/alert.service';
 export class PushMessagesPage {
   public messages: PushMessage[] = null;
 
-  constructor(private push: PushService, private alert: AlertService) {
+  constructor(private push: PushService, private alert: AlertService, private navParams: NavParams) {
     this.messages = push.messages;
   }
 
@@ -25,8 +26,9 @@ export class PushMessagesPage {
 
   ionViewDidEnter(): void {
     if (!this.buttonVisible()) {
-          this.alert.showAlert(constants.pushAlertMessage, constants.featureNotConfigured, 
-            constants.alertButtons, constants.showDocs, constants.pushDocsUrl);
+      const previousPage: any = this.navParams.get('previousPage');
+      this.alert.showAlert(constants.pushAlertMessage, constants.featureNotConfigured, 
+        constants.alertButtons, constants.showDocs, constants.pushDocsUrl, previousPage);
 
     }
   }
